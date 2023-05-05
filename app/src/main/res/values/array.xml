@@ -2,6 +2,7 @@
 <resources>
 
     <string-array name="array_spiner">
+        <item>Не указано</item>
         <item>Таб</item>
         <item>Мл</item>
         <item>Мг</item>

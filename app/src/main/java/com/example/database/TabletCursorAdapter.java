@@ -30,7 +30,10 @@ public class TabletCursorAdapter  extends CursorAdapter {
         TextView quntityTextView=view.findViewById(R.id.quntityTextView);
         TextView genTextView=view.findViewById(R.id.genTextView);
 
+
+
         String name=cursor.getString(cursor.getColumnIndexOrThrow(TabletEntry.COLUMN_NAME));
+        //int guntity=cursor.getInt(cursor.getColumnIndexOrThrow(TabletEntry.COLUMN_QUN));
         String quntity=cursor.getString(cursor.getColumnIndexOrThrow(TabletEntry.COLUMN_QUN));
         String gen=cursor.getString(cursor.getColumnIndexOrThrow(TabletEntry.COLUMN_GEN));
 
@@ -40,6 +43,7 @@ public class TabletCursorAdapter  extends CursorAdapter {
         else if (gen.equals("Мл")){
             imageView.setImageResource(R.drawable.freeicontabletbuttleredtwo);
         }
+
         nameTextView.setText(name);
         quntityTextView.setText(quntity);
         genTextView.setText(gen);

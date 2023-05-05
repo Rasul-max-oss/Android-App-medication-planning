@@ -50,6 +50,7 @@ public class TabletContentProvider extends ContentProvider {
                 throw new IllegalArgumentException("CAN QUERY INCORECT URI" + uri);
 
         }
+        cursor.setNotificationUri(getContext().getContentResolver(),uri);
         return cursor;
     }
 
@@ -81,7 +82,7 @@ public class TabletContentProvider extends ContentProvider {
                     Log.e("Insetr method","Insertion of data in the table failed for "+ uri);
                     return null;
                 }
-
+                getContext().getContentResolver().notifyChange(uri,null);
                 return ContentUris.withAppendedId(uri,id);
             default:
                 throw new IllegalArgumentException("Insertion of data in the table failed for" + uri);
@@ -95,16 +96,23 @@ public class TabletContentProvider extends ContentProvider {
     public int delete(Uri uri,  String selection, String[] selectionArgs) {
         SQLiteDatabase db= tabletDbOpenHelper.getWritableDatabase();
         int match = uriMatcher.match(uri);
+        int rowsDeleted;
         switch (match){
             case TABLETS:
-                return db.delete(TabletContract.TabletEntry.TABLE_NAME,selection,selectionArgs);
+                rowsDeleted =db.delete(TabletContract.TabletEntry.TABLE_NAME,selection,selectionArgs);
+                break;
             case TABLETS_ID:
                 selection= TabletContract.TabletEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                return  db.delete(TabletContract.TabletEntry.TABLE_NAME,selection,selectionArgs);
+                rowsDeleted =db.delete(TabletContract.TabletEntry.TABLE_NAME,selection,selectionArgs);
+                break;
             default:
                 throw new IllegalArgumentException("CAN DELETE  THIS  URI" + uri);
         }
+        if (rowsDeleted!=0){
+            getContext().getContentResolver().notifyChange(uri,null);
+        }
+        return rowsDeleted;
     }
 
     @Override
@@ -135,17 +143,23 @@ public class TabletContentProvider extends ContentProvider {
 
         SQLiteDatabase db= tabletDbOpenHelper.getWritableDatabase();
         int match = uriMatcher.match(uri);
+        int rowsUpdated;
         switch (match){
             case TABLETS:
-                return db.update(TabletContract.TabletEntry.TABLE_NAME,contentValues,selection,selectionArgs);
+                rowsUpdated= db.update(TabletContract.TabletEntry.TABLE_NAME,contentValues,selection,selectionArgs);
+                break;
             case TABLETS_ID:
                 selection= TabletContract.TabletEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                return  db.update(TabletContract.TabletEntry.TABLE_NAME,contentValues,selection,selectionArgs);
+                rowsUpdated= db.update(TabletContract.TabletEntry.TABLE_NAME,contentValues,selection,selectionArgs);
+                break;
             default:
                 throw new IllegalArgumentException("CAN UPDATE THIS URI" + uri);
-
         }
+        if(rowsUpdated!=0){
+            getContext().getContentResolver().notifyChange(uri,null);
+        }
+        return rowsUpdated;
     }
 
     @Override
