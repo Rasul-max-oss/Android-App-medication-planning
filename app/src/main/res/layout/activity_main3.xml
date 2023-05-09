@@ -25,7 +25,7 @@
         android:layout_height="70dp"
         android:layout_marginTop="36dp"
         android:layout_marginHorizontal="26dp"
-        android:text="Select Time"
+        android:text="Выбрать время"
         android:textSize="26dp"/>
 
     <Button
@@ -34,7 +34,7 @@
         android:layout_height="70dp"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="26dp"
-        android:text="Set Alarm"
+        android:text="Установить"
         android:textSize="26dp"/>
 
     <Button
@@ -43,7 +43,7 @@
         android:layout_height="70dp"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="26dp"
-        android:text="Cancel Alarm"
+        android:text="Отменить"
         android:textSize="26dp"/>
 
 </LinearLayout>

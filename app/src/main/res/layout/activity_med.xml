@@ -27,5 +27,4 @@
         android:clickable="true"
         app:srcCompat="@drawable/add_medication_white_24" />
 
-
 </RelativeLayout>
